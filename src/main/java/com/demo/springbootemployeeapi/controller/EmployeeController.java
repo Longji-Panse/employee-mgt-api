@@ -20,7 +20,7 @@ public class EmployeeController {
     }
 
     //display list of employees
-    @GetMapping("/employee")
+    @GetMapping("/employees")
     public List<Employee> viewHomePage(){
         List<Employee> employeeList = findPaginated(1).getContent();
         return employeeList;
