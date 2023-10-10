@@ -20,38 +20,38 @@ public class EmployeeController {
     }
 
     //display list of employees
-    @GetMapping("/")
+    @GetMapping("/employee")
     public List<Employee> viewHomePage(){
-        return findPaginated(1);
+        List<Employee> employeeList = findPaginated(1).getContent();
+        return employeeList;
     }
 
-    @GetMapping("/getOneEmployee/{id}")
+    @GetMapping("/employee/{id}")
     public Employee getOneEmployee(@PathVariable(value = "id") long id){
         return employeeService.getEmployeeById(id);
 
     }
 
-    @PostMapping("/saveEmployee")
+    @PostMapping("/employee")
     public void saveEmployee(@RequestBody Employee employee){
         employeeService.saveEmployee(employee);
     }
 
-    @PutMapping("/updateEmployee")
+    @PutMapping("/employee")
     public void updateEmployee(@RequestBody Employee employee){
         employeeService.saveEmployee(employee);
     }
 
-    @DeleteMapping("/deleteEmployee/{id}")
+    @DeleteMapping("/employee/{id}")
     public void deleteEmployee(@PathVariable(value = "id") long id){
         employeeService.deleteEmployeeById(id);
     }
 
     @GetMapping("/page/{pageNo}")
-    public List<Employee> findPaginated(@PathVariable(value = "pageNo") int pageNo){
+    public Page<Employee> findPaginated(@PathVariable(value = "pageNo") int pageNo){
         int pageSize = 10;
         Page<Employee> page = employeeService.findPaginated(pageNo,pageSize);
-        List<Employee> listEmployees = page.getContent();
-        return listEmployees;
+        return page;
     }
 
 }
