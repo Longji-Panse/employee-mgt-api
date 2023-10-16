@@ -1,29 +1,34 @@
 package com.demo.springbootemployeeapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "employees")
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank(message = "First Name cannot be blank.")
     @Column(name = "first_name")
     private String firstName;
+
+    @NotBlank(message = "Last Name cannot be blank.")
     @Column(name = "last_name")
     private String lastName;
+
+    @NotBlank(message = "Email address cannot be blank.")
+    @Email(message = "Email address must be valid")
     @Column(name = "email")
     private String email;
-
-    public Employee() {
-    }
-    public Employee(long id, String firstName, String lastName, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
 
     public long getId() {
         return id;

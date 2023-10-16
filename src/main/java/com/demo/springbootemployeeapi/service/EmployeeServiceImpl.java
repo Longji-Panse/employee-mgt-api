@@ -1,18 +1,19 @@
 package com.demo.springbootemployeeapi.service;
 
+import com.demo.springbootemployeeapi.exception.EmployeeNotFoundException;
 import com.demo.springbootemployeeapi.model.Employee;
 import com.demo.springbootemployeeapi.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableArgumentResolver;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService{
 
     EmployeeRepository employeeRepository;
@@ -32,14 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee getEmployeeById(long id) {
-        Optional<Employee> optional = employeeRepository.findById(id);
-        Employee employee = null;
-        if(optional.isPresent()){
-            employee = optional.get();
-        }else{
-            throw new RuntimeException("No employee found for id:: "+id);
-        }
-        return employee;
+        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("No employee found for id::"+id));
     }
 
     @Override
