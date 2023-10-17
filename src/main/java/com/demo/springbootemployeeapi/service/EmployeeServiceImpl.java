@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class EmployeeServiceImpl implements EmployeeService{
 
     EmployeeRepository employeeRepository;
@@ -26,9 +26,12 @@ public class EmployeeServiceImpl implements EmployeeService{
       return employeeRepository.findAll();
     }
 
+    @Transactional
     @Override
-    public void saveEmployee(Employee employee) {
-        this.employeeRepository.save(employee);
+    public Employee saveEmployee(Employee employee) {
+
+        Employee saveEmployee = employeeRepository.save(employee);
+        return saveEmployee;
     }
 
     @Override

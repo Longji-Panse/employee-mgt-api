@@ -34,7 +34,8 @@ public class EmployeeController {
 
     @PostMapping("/employee")
     public void saveEmployee(@RequestBody Employee employee){
-        employeeService.saveEmployee(employee);
+        Employee savedEmployee = employeeService.saveEmployee(employee);
+
     }
 
     @PutMapping("/employee")
