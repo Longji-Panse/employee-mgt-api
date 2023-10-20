@@ -22,14 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService{
         this.employeeRepository = employeeRepository;
     }
     @Override
-    public List<Employee> getAllEmployees() {
-      return employeeRepository.findAll();
+    public Page<Employee> getAllEmployees(int pageNo, int pageSize) {
+      return findAllPaginated(pageNo,pageSize);
     }
 
     @Transactional
     @Override
     public Employee saveEmployee(Employee employee) {
-
         Employee saveEmployee = employeeRepository.save(employee);
         return saveEmployee;
     }
@@ -45,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Page<Employee> findPaginated(int pageNo, int pageSize) {
+    public Page<Employee> findAllPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo-1, pageSize);
         return this.employeeRepository.findAll(pageable);
     }

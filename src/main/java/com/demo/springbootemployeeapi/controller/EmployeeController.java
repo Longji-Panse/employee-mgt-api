@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+
 public class EmployeeController {
 
 
@@ -19,8 +20,9 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+
     //display list of employees
-    @GetMapping("/employees")
+    @GetMapping("/employee")
     public List<Employee> viewHomePage(){
         List<Employee> employeeList = findPaginated(1).getContent();
         return employeeList;
@@ -29,13 +31,11 @@ public class EmployeeController {
     @GetMapping("/employee/{id}")
     public Employee getOneEmployee(@PathVariable(value = "id") long id){
         return employeeService.getEmployeeById(id);
-
     }
 
     @PostMapping("/employee")
     public void saveEmployee(@RequestBody Employee employee){
         Employee savedEmployee = employeeService.saveEmployee(employee);
-
     }
 
     @PutMapping("/employee")
@@ -48,10 +48,10 @@ public class EmployeeController {
         employeeService.deleteEmployeeById(id);
     }
 
-    @GetMapping("/page/{pageNo}")
+    @GetMapping("/employee/page/{pageNo}")
     public Page<Employee> findPaginated(@PathVariable(value = "pageNo") int pageNo){
         int pageSize = 10;
-        Page<Employee> page = employeeService.findPaginated(pageNo,pageSize);
+        Page<Employee> page = employeeService.findAllPaginated(pageNo,pageSize);
         return page;
     }
 

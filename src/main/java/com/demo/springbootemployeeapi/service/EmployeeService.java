@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<Employee> getAllEmployees();
+    Page<Employee> getAllEmployees(int pageNo, int pageSize);
     Employee saveEmployee(Employee employee);
     Employee getEmployeeById(long id);
     void deleteEmployeeById(long id);
 
-    Page<Employee> findPaginated(int pageNo, int pageSize);
+    Page<Employee> findAllPaginated(int pageNo, int pageSize);
 
     }
