@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -24,20 +25,25 @@ public class EmployeeController {
     //display list of employees
     @GetMapping("/employee")
     public List<Employee> viewHomePage(){
-        List<Employee> employeeList = findPaginated(1).getContent();
-        return employeeList;
-    }
+        Page<Employee> employeePage = employeeService.getAllEmployees(1, 10);
+        if (employeePage != null) {
+            return employeePage.getContent();
+        } else {
+            // Handle the case when employeePage is null
+            return Collections.emptyList(); // Or return an appropriate response
+        }
 
-    @GetMapping("/employee/{id}")
-    public Employee getOneEmployee(@PathVariable(value = "id") long id){
-        return employeeService.getEmployeeById(id);
+       // List<Employee> employeeList = employeeService.getAllEmployees(1, 10).getContent();
+      //  return employeeList;
     }
-
     @PostMapping("/employee")
     public void saveEmployee(@RequestBody Employee employee){
         Employee savedEmployee = employeeService.saveEmployee(employee);
     }
-
+    @GetMapping("/employee/{id}")
+    public Employee getOneEmployee(@PathVariable(value = "id") long id){
+        return employeeService.getEmployeeById(id);
+    }
     @PutMapping("/employee")
     public void updateEmployee(@RequestBody Employee employee){
         employeeService.saveEmployee(employee);

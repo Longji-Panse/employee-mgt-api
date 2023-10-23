@@ -77,13 +77,10 @@ public class EmployeeServiceTest {
                 .email("jc@c.com").build();
 
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.ofNullable(employee));
-
-        //act
+        //Act
         Employee savedEmployee = employeeService.getEmployeeById(employeeId);
-
         //Assert
         Assertions.assertThat(savedEmployee).isNotNull();
-
     }
 
     @Test
@@ -94,11 +91,7 @@ public class EmployeeServiceTest {
                 .firstName("john")
                 .lastName("cena")
                 .email("jc@wwe.com").build();
-
-       // when(employeeRepository.findById(employeeId)).thenReturn(Optional.ofNullable(employee));
-
-       //Act & Assert
+        //Act & Assert
         assertAll(() -> employeeService.deleteEmployeeById(employeeId));
-
     }
 }

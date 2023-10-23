@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 
@@ -23,7 +24,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
     @Override
     public Page<Employee> getAllEmployees(int pageNo, int pageSize) {
-      return findAllPaginated(pageNo,pageSize);
+        Page<Employee> employees = findAllPaginated(pageNo, pageSize);
+        if (employees == null) {
+            throw new NoSuchElementException("No employees found.");
+        }
+        return employees;
+        //return findAllPaginated(pageNo,pageSize);
     }
 
     @Transactional
